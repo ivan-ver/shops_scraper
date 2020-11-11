@@ -41,14 +41,14 @@ class DnsSpider(CrawlSpider):
                 url=self.dns_url + url,
                 callback=self.product_parser
             )
-        # next_page = response.xpath("//li[@class='pagination-widget__page']/a/@href").extract()
-        # if next_page:
-        #     yield self.get_request(
-        #             url=response.url + next_page[-1],
-        #             callback=self.product_list_parser,
-        #         )
-        # else:
-        #     return None
+        next_page = response.xpath("//li[@class='pagination-widget__page']/a/@href").extract()
+        if next_page:
+            yield self.get_request(
+                    url=response.url + next_page[-1],
+                    callback=self.product_list_parser,
+                )
+        else:
+            return None
 
     @staticmethod
     def product_parser(response):
